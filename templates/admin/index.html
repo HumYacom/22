@@ -6,20 +6,20 @@
 <div class="d-flex flex-row-reverse">
   <a href="/logout" class="btn btn-info">Logout</a>
 </div>
-
-<h3 class="d-flex justify-content-center">รายการสินค้า</h3>
-<br>
 <div class="container">
+  <h3 class="d-flex justify-content-center">รายการคำร้อง</h3>
+  <br>
   <table class="table table-success table-striped">
     <thead class="table-success">
       <tr>
-        <th>รายการ</th>
-        <th>ชื่อสินค้า</th>
+        <th>ลำดับที่</th>
+        <th>ผู้ยืม</th>
+        <th>แผนก</th>
         <th>ประเภท</th>
-        <th>ยี่ห้อ</th>
-        <th>ราคา</th>
-        <th>last</th>
-        <th>Actions</th>
+        <th>จำนวน</th>
+        <th>วันที่ยืม</th>
+        <th>สถานะ</th>
+        <th>action</th>
       </tr>
     </thead>
 
@@ -36,11 +36,35 @@
         <td>
           <button type="button" class="btn btn-warning" title="Edit" data-toggle="tooltip" data-bs-toggle="modal"
             data-bs-target="#exampleModal{{row.0}}"><i class="bi bi-folder2-open"></i></button>
-
+          &nbsp
           <button type="button" class="btn btn-danger" title="Delete" data-toggle="tooltip" data-bs-toggle="modal"
             data-bs-target="#staticBackdrop{{row.0}}"><i class="bi bi-trash2-fill"></i></button>
         </td>
       </tr>
+      <!--Delect-->
+      <div class="modal fade" id="staticBackdrop{{row.0}}" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-black" id="staticBackdropLabel">ยืนยันการลบ ?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('Document_products.Admin_del')}}" method="POST">
+
+              <div class="modal-body text-black">
+                <h3>Do you want deletc {{row.1}} ?</h3>
+              </div>
+              <input type="hidden" name="re_no" value="{{row.0}}">
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
       <!--Update-->
       <div class="modal fade" id="exampleModal{{row.0}}" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -55,35 +79,35 @@
               <form action="{{url_for('Document_products.Admin_edit')}}" method="POST">
 
                 <div class="form-group">
-                  <input type="hidden" class="form-control" id="" value="{{row.0}}" name="No">
+                  <input type="hidden" class="form-control" id="" value="{{row.0}}" name="re_no">
                 </div>
 
                 <div class="form-group">
-                  <label for="">Product_name</label>
-                  <input type="text" class="form-control" id="" value="{{row.1}}" name="Product_name" required>
+                  <input type="hidden" class="form-control " id="" value="{{row.1}}" name="User_name">
                 </div>
 
                 <div class="form-group">
-                  <label for="">Product_type</label>
-                  <input type="text" class="form-control" id="" value="{{row.2}}" name="Product_type" required>
+                  <input type="hidden" class="form-control" id="" value="{{row.2}}" name="re_pstatus">
                 </div>
 
                 <div class="form-group">
-                  <label for="">Product_manner</label>
-                  <input type="text" class="form-control" id="" value="{{row.3}}" name="Product_manner" required>
+                  <input type="hidden" class="form-control " id="" value="{{row.3}}" name="Product_type">
                 </div>
 
                 <div class="form-group">
-                  <label for="">Product_price</label>
-                  <input type="text" class="form-control" id="" value="{{row.4}}" name="Product_price" required>
+                  <input type="hidden" class="form-control" id="" value="{{row.4}}" name="re_unit">
                 </div>
 
                 <div class="form-group">
-                  <input type="hidden" class="form-control" id="" value="{{row.5}}" name="Time">
+                  <input type="hidden" class="form-control " id="" value="{{row.5}}" name="re_date">
                 </div>
 
                 <div class="form-group">
-                  <input type="hidden" class="form-control" id="" value="{{row.6}}" name="type_id" required>
+                  <label for="">สถานะ</label>
+                  <select class="form-select" name="re_status" aria-label="Default select example" value="{{row.6}}">
+                    <option value="ยืม">ยืม</option>
+                    <option value="คืน">คืน</option>
+                  </select>
                 </div>
 
                 <div class="modal-footer">
@@ -95,35 +119,8 @@
           </div>
         </div>
       </div>
-
-      <!--Delect-->
-      <div class="modal fade" id="staticBackdrop{{row.0}}" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5 text-black" id="staticBackdropLabel">ยืนยันการลบ ?</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{url_for('Document_products.Admin_del')}}" method="POST">
-
-              <div class="modal-body text-black">
-                <h3>Do you want deletc {{row.2}} ?</h3>
-              </div>
-              <input type="hidden" name="No" value="{{row.0}}">
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
     </tbody>
     {% endfor %}
   </table>
-  <a href="/Adding" class="btn btn-success">Include</a>
 </div>
 {% endblock %}

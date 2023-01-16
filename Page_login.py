@@ -21,7 +21,7 @@ def Checklog():
     password = request.form['Password']
 
     with db.cursor() as cur:
-        sql = "SELECT User_name,log FROM user WHERE User_log = %s AND User_pass = %s AND Status = 1 "
+        sql = "SELECT * FROM user WHERE User_log = %s AND User_pass = %s AND Status = 1 "
         try:
             cur.execute(sql, (username, password))
             db.commit()
@@ -32,10 +32,8 @@ def Checklog():
         if len(rows) > 0:
             session['username'] = username
             session['Name'] = rows[0][1]
-            if rows[0][1] == 'admin':
-                return redirect(url_for('Document_products.Admin_index'))
-            elif rows[0][1] == 'user':
-                return redirect(url_for('Pageuse.userindex'))
+            session.permanent = True
+            return redirect(url_for('Document_products.Admin_index'))
         else:
             flash("User or password ไม่ถูกต้อง")
             return render_template('login/login.html')
