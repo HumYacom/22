@@ -18,13 +18,13 @@ def userindex():
         except:
             return render_template('user/index_user.html', datas=('nodata'))
         rows = cur.fetchall()
-
         user = list(range(len(rows)))
         total = len(user)
         page,per_page,offset = get_page_args(page_parameter='page',per_page_parameter='per_page')
-        get_user = user[offset:offset+10]
+        pagination_user = user[offset:offset+10]
         pagination = Pagination(page='page', per_page='per_page', total='total', css_framework='bootstrap5')
-    return render_template('user/index_user.html', datas=rows)
+    return render_template('user/index_user.html', datas=rows,page=page, per_page=per_page, Pagination=pagination, len=total,user=pagination_user)
+
     
 @Pageuse.route("/cresher", methods=["POST"])
 def cresher():
