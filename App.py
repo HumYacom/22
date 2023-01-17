@@ -2,6 +2,7 @@ from flask import Flask,render_template,request
 from Page_login import *
 from Page_user import *
 from Page_admin import *
+from Page_detail import *
 from datetime import timedelta
 
 app = Flask(__name__)
@@ -10,6 +11,7 @@ app.permanent_session_lifetime = timedelta(minutes=1)
 app.register_blueprint(User)
 app.register_blueprint(Pageuse)
 app.register_blueprint(Document_products)
+app.register_blueprint(detailpd)
 
 @app.route('/')
 def index():
