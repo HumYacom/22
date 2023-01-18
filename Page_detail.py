@@ -11,7 +11,7 @@ detailpd = Blueprint('detailpd', __name__)
 @detailpd.route("/detail_product")
 def detail_product():
     with db.cursor() as cur:
-        sql = "SELECT requisition.re_no, requisition.User_name, requisition.re_pstatus, requisition.Product_type, requisition.re_unit,Products.Product_manner, requisition.re_date,inventory.type_id,requisition.re_status FROM ((Products INNER JOIN inventory ON Products.Product_type = inventory.Product_type) INNER JOIN requisition ON Products.Product_type = requisition.Product_type);"
+        sql = "SELECT requisition.re_no, requisition.User_name, requisition.re_pstatus, requisition.Product_type, requisition.re_unit,Products.Product_manner, requisition.re_date,inventory.type_id,requisition.re_status FROM ((Products INNER JOIN inventory ON Products.Product_type = inventory.Product_type) INNER JOIN requisition ON Products.Product_type = requisition.Product_type) WHERE requisition.User_name;"
         try:
             cur.execute(sql)
             db.commit()

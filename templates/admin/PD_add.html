@@ -1,4 +1,4 @@
-{% extends "user/layout_user.html "%}
+{% extends "admin/layout_admin.html "%}
 
 {% block content %}
 <br><br><br><br><br><br>
@@ -7,7 +7,7 @@
 </div>
 <br>
 <div class="container">
-  <form action="{{url_for('Pageuse.userAdd')}}" method="POST">
+  <form action="{{url_for('PD.PDAdd')}}" method="POST">
 
     <div class="form-group">
       <input type="hidden" class="form-control" id="" name="re_no">
@@ -65,7 +65,7 @@
     <br>
 
 <div class="modal-footer">
-  <a href="{{url_for('Pageuse.userindex')}}" class="btn btn-primary">Back</a> &nbsp
+  <a href="{{url_for('PD.pd')}}" class="btn btn-primary">Back</a> &nbsp
   <button type="submit" class="btn btn-success">ตกลง</button>
 </div>
 </form>
