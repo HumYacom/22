@@ -11,7 +11,7 @@ Pageuse = Blueprint('Pageuse', __name__)
 @Pageuse.route("/userindex")
 def userindex():
     with db.cursor() as cur:
-        sql = "SELECT * FROM requisition"
+        sql = "SELECT * FROM requisition ORDER BY re_date DESC"
         try:
             cur.execute(sql)
             db.commit()
@@ -45,6 +45,22 @@ def cresher():
             pagination = Pagination(css_framework='bootstrap5')
         return render_template('user/index_user.html', datas=rows, Pagination=pagination, user=pagination_user)
 
+@Pageuse.route("/cresher2", methods=["POST"])
+def cresher2():
+    if request.method == "POST":
+        dfname = request.form['dfname']
+        with db.cursor() as cur:
+            sql = "SELECT * FROM requisition WHERE User_name = %s"
+            try:
+                cur.execute(sql, (dfname))
+                db.commit()
+            except:
+                return render_template('user/index_user.html', datas=('nodata'))
+            rows = cur.fetchall()
+            user = list(range(len(rows)))
+            pagination_user = user
+            pagination = Pagination(css_framework='bootstrap5')
+        return render_template('user/index_user.html', datas=rows, Pagination=pagination, user=pagination_user)
 
 @Pageuse.route("/Useradding")
 def useradding():
