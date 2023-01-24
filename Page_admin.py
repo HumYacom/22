@@ -14,7 +14,7 @@ def Admin_index():
     if "username" not in session:
         return render_template('login.html')
     with db.cursor() as cur:
-        sql = "SELECT requisition.re_no,requisition.User_name,requisition.re_pstatus,requisition.Product_type, requisition.re_unit,Products.Product_manner,requisition.re_date,inventory.type_id,requisition.re_status ,Product_quantity-re_unit AS total FROM ((products INNER JOIN inventory ON Products.Product_type = inventory.Product_type)INNER JOIN requisition ON Products.Product_type = requisition.Product_type);"
+        sql = "SELECT * FROM requisition"
         try:
             cur.execute(sql)
             db.commit()
@@ -89,7 +89,7 @@ def Admin_del():
 @Document_products.route("/pd")
 def pd():
     with db.cursor() as cur:
-        sql = "SELECT Products.Product_id, Products.Product_type, inventory.Product_category, Products.Product_manner, Products.Product_quantity,Products.Product_date,inventory.type_id,inventory.Product_status FROM products INNER JOIN inventory ON Products.Product_type = inventory.Product_type;"
+        sql = "SELECT Products.Product_id, Products.Product_type, inventory.Product_category, Products.Product_manner, Products.Product_quantity,Products.Product_date,inventory.type_id,Product_status,Product_quantity AS total FROM Products INNER JOIN inventory ON Products.Product_type = inventory.Product_type ORDER BY Product_id desc;"
         try:
             cur.execute(sql)
             db.commit()
