@@ -1,4 +1,4 @@
-{% extends "user/layout_user.html "%}
+{% extends "admin/layout_admin.html "%}
 
 {% block content %}
 <br><br><br><br><br><br>
@@ -7,7 +7,7 @@
 </div>
 <br>
 <div class="container">
-  <form action="{{url_for('Pageuse.userAdd')}}" method="POST">
+  <form action="{{url_for('Document_products.adminadd')}}" method="POST">
 
     <div class="form-group">
       <input type="hidden" class="form-control" id="" name="re_no">
@@ -69,7 +69,7 @@
     <br><br>
 
     <div class="modal-footer justify-content-center">
-      <a href="{{url_for('Pageuse.userindex')}}" class="btn btn-primary">Back</a> &nbsp
+      <a href="{{url_for('Document_products.Admin_index')}}" class="btn btn-primary">Back</a> &nbsp
       <button type="submit" class="btn btn-success">ตกลง</button>
     </div>
   </form>
