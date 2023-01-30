@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect,session,flash
+from flask import Blueprint, render_template, request, url_for, redirect, session, flash
 import pymysql
 from dbconnect import *
 from flask_paginate import Pagination, get_page_args
@@ -23,18 +23,38 @@ def Admin_index():
         rows = cur.fetchall()
         user = list(range(len(rows)))
         total = len(user)
-        page,per_page,offset = get_page_args(page_parameter='page',per_page_parameter='per_page')
+        page, per_page, offset = get_page_args(
+            page_parameter='page', per_page_parameter='per_page')
         pagination_user = user[offset:offset+10]
         pagination_date = pagination_user
-        pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap5')
+        pagination = Pagination(
+            page=page, per_page=per_page, total=total, css_framework='bootstrap5')
     return render_template('admin/index.html', datas=rows, page=page, per_page=per_page, Pagination=pagination, len=total, user=pagination_date)
 
 @Document_products.route("/cresheradmin", methods=["POST"])
 def cresheradmin():
     if request.method == "POST":
         dstart = request.form['dstart']
+        endstart = request.form['endstart']
         with db.cursor() as cur:
-            sql = "SELECT * FROM record WHERE re_pstatus = %s"
+            sql = "SELECT * FROM record WHERE re_date BETWEEN %s AND %s"
+            try:
+                cur.execute(sql, (dstart,endstart))
+                db.commit()
+            except:
+                return render_template('admin/index.html', datas=('nodata'))
+            rows = cur.fetchall()
+            user = list(range(len(rows)))
+            pagination_user = user
+            pagination = Pagination(css_framework='bootstrap5')
+        return render_template('admin/index.html', datas=rows, Pagination=pagination, user=pagination_user)
+
+@Document_products.route("/cresheradmin2", methods=["POST"])
+def cresheradmin2():
+    if request.method == "POST":
+        dstart = request.form['dfname']
+        with db.cursor() as cur:
+            sql = "SELECT * FROM record WHERE User_name = %s"
             try:
                 cur.execute(sql, (dstart))
                 db.commit()
@@ -45,6 +65,7 @@ def cresheradmin():
             pagination_user = user
             pagination = Pagination(css_framework='bootstrap5')
         return render_template('admin/index.html', datas=rows, Pagination=pagination, user=pagination_user)
+
 
 @Document_products.route("/Admin_edit", methods=["POST"])
 def Admin_edit():
@@ -61,18 +82,19 @@ def Admin_edit():
             sql2 = "UPDATE record SET Product_export = Product_export - %s  WHERE re_no = %s;"
             sql3 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
             try:
-                cur.execute(sql, (No, User_name, re_pstatus,Product_type, re_unit ,re_status))
+                cur.execute(sql, (No, User_name, re_pstatus,
+                            Product_type, re_unit, re_status))
                 db.commit()
-                cur.execute(sql2, (re_unit,No))
+                cur.execute(sql2, (re_unit, No))
                 db.commit()
                 cur.execute(sql3, (Product_type))
                 db.commit()
-                
+
                 rows = cur.fetchall()
                 sql4 = "UPDATE products SET Product_quantity = Product_quantity + %s WHERE Product_id = %s"
-                cur.execute(sql4, (re_unit,rows[0][1]))
+                cur.execute(sql4, (re_unit, rows[0][1]))
                 db.commit()
-            
+
             except:
                 return redirect(url_for('Document_products.Admin_index'))
 
@@ -88,7 +110,7 @@ def Admin_del():
         with db.cursor() as cur:
             sql = "DELETE FROM record WHERE re_no = %s "
             try:
-                cur.execute(sql,(No))
+                cur.execute(sql, (No))
                 db.commit()
             except:
                 return redirect(url_for('Document_products.Admin_index'))
@@ -97,45 +119,51 @@ def Admin_del():
 
     return redirect(url_for('Document_products.Admin_index'))
 
-# @Document_products.route("/adminadding")
-# def adminadding():
-#    return render_template("admin/add.html")
-#
-# @Document_products.route("adminadd", methods =["POST"])
-# def adminadd():
-#    if request.method == "POST":
-#        no = request.form["re_no"]
-#       brname = request.form["User_name"]
-#        dmname = request.form["re_pstatus"]
-#        pdtype = request.form["Product_type"]
-#        unit = request.form["re_unit"]
-#        date = request.form["re_date"]
-#        st = request.form["re_status"]
-#        with db.cursor() as cur:
-#            sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-#            sql2 = "UPDATE record SET Product_export = Product_export - %s WHERE re_no = %s"
-#            sql3 = "SELECT Product_quantity,Product_id FROM products WHERE Product_type = %s"
-#            sql4 = "INSERT INTO borrow (borrow_no,Product_type,borrow_date,borrow_unit,User_name) VALUES (%s,%s,%s,%s,%s)"
-#            try:
-#                cur.execute(sql,(no,brname,dmname,pdtype,unit,date,st))
-#                db.commit
-#                cur.execute(sql2,(unit,no))
-#                db.commit
-#                cur.execute(sql3,(pdtype))
-#                db.commit
-#                cur.execute(sql4,(no,pdtype,date,unit,brname))
-#                db.commit
-#
-#                rows = cur.fetchall()
-#                sql5 = "UPDATE products SET Product_quantity = Product_quantity - %s WHERE Product_id = %s"
-#                cur.execute(sql5,(unit,rows[0][1]))
-#                db.commit
-#            except:
-#                return redirect(url_for('Document_products.Admin_index'))
-#
-#           return redirect(url_for('Document_products.Admin_index'))
-#
-#    return render_template("admin/add.html")
+
+@Document_products.route("/adminadding")
+def adminadding():
+    return render_template("admin/add.html")
+
+
+@Document_products.route("/adminadd", methods=["POST"])
+def adminadd():
+    if request.method == "POST":
+        runum = request.form['re_no']
+        User_name = request.form['User_name']
+        re_pstatus = request.form['re_pstatus']
+        Product_type = request.form['Product_type']
+        re_unit = request.form['re_unit']
+        re_date = request.form['re_date']
+        re_status = request.form['re_status']
+        with db.cursor() as cur:
+            sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            sql2 = "UPDATE record SET Product_export = Product_export - %s  WHERE re_no = %s;"
+            sql3 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
+            sql4 = "INSERT INTO borrow (borrow_no,Product_type,borrow_date,borrow_unit,User_name) VALUES (%s,%s,%s,%s,%s)"
+            try:
+                
+                cur.execute(sql,(runum, User_name, re_pstatus,Product_type, re_unit, re_date, re_status))
+                db.commit()
+                cur.execute(sql2,(re_unit, runum))
+                db.commit()
+                cur.execute(sql3,(Product_type))
+                db.commit()
+                
+
+                rows = cur.fetchall()
+                sql5 = "UPDATE products SET Product_quantity = Product_quantity - %s WHERE Product_id = %s"
+                cur.execute(sql5,(re_unit, rows[0][1]))
+                db.commit()
+                cur.execute(sql4,(runum,Product_type,re_date,re_unit,User_name))
+                db.commit()
+
+                flash("ได้ทำการส่งเรื่องขอวัสดุแล้วกำลังส่งข้อมูล...กรุณารอสักครู่ครับ")
+            except:
+                return redirect(url_for('Document_products.Admin_index', status="wait"))
+
+            return redirect(url_for('Document_products.Admin_index', status="wait"))
+
+    return render_template("admin/add.html", status="wait")
 
 #menu products
 @Document_products.route("/pd")
@@ -213,12 +241,12 @@ def PDAdd():
         Product_status = request.form['Product_status']
         Product_category = request.form['Product_category']
         with db.cursor() as cur:
-            sql = "INSERT INTO products_type(type_id,Product_type,Product_category,Product_status) VALUES(%s,%s,%s,%s)"
-            sql2 = "INSERT INTO products(Product_id,Product_type,Product_manner,Product_quantity,Product_date,type_id) VALUES(%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT INTO products_type(type_id,Product_type,Product_category,Product_status,Product_date,type_quantity) VALUES(%s,%s,%s,%s,%s,%s)"
+            sql2 = "INSERT INTO products(Product_id,Product_type,Product_manner,Product_quantity,type_id) VALUES(%s,%s,%s,%s,%s)"
             try:
-                cur.execute(sql,(re_status,re_pstatus,Product_category,Product_status))
+                cur.execute(sql,(re_status,re_pstatus,Product_category,Product_status,re_date,re_unit))
                 db.commit()
-                cur.execute(sql2,(runum,re_pstatus,Product_type,re_unit,re_date,re_status))
+                cur.execute(sql2,(runum,re_pstatus,Product_type,re_unit,re_status))
                 db.commit()
                 flash(
                     "ได้ทำการส่งเรื่องขอวัสดุแล้วกำลังส่งข้อมูล...กรุณารอสักครู่ครับ")
@@ -259,4 +287,20 @@ def menubroken():
 #Borrow
 @Document_products.route("/Borrow")
 def Borrow():
-    return
+    with db.cursor() as cur:
+        sql = "SELECT * FROM borrow ORDER BY borrow_no DESC"
+        try:
+            cur.execute(sql)
+            db.commit()
+        except:
+            return render_template('admin/menu_borrow.html', datas=('nodata'))
+        rows = cur.fetchall()
+        user = list(range(len(rows)))
+        total = len(user)
+        page, per_page, offset = get_page_args(
+            page_parameter='page', per_page_parameter='per_page')
+        pagination_user = user[offset:offset+10]
+        pagination_date = pagination_user
+        pagination = Pagination(
+            page=page, per_page=per_page, total=total, css_framework='bootstrap5')
+    return render_template('admin/menu_borrow.html', datas=rows, page=page, per_page=per_page, Pagination=pagination, len=total, user=pagination_date)

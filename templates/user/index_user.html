@@ -3,7 +3,7 @@
 {% block content %}
 <br><br><br><br><br><br><br>
 <div class="d-flex justify-content-center">
-  <h3>รายการวัสดุ</h3>
+  <h3>รายการสินค้า</h3>
 </div>
 <br>
 {% with messages = get_flashed_messages() %}
@@ -26,40 +26,7 @@
 <div class="container">
   <div class="row d-flex p-2">
     <div class="col-md-3">
-      <form action="{{url_for('Pageuse.cresher')}}" method="POST">
-        <label for="">
-          <h4>ค้นหาเวลา</h4>
-        </label>
-        <div class="col-auto">
-          <div class="d-inline-flex p-1">
-            <input type="datetime-local" class="form-control" value="" name="dstart">
-            &nbspถึง</h3>&nbsp
-            <input type="datetime-local" class="form-control" value="" name="endstart">
-          </div>
-          <button type="submit" class="btn btn-success">ค้นหา</button>
-          <a href="/userindex" class="btn btn-primary">หน้าหลัก</a>
-        </div>
-      </form>
-    </div>
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <div class="col-md-3">
-      <form action="{{url_for('Pageuse.cresher2')}}" method="POST">
-        <label for="">
-          <h4>ค้นหาชื่อผู้ยืม</h4>
-        </label>
-        <div class="col-auto">
-          <div class="d-inline-flex p-1">
-            <input type="text" class="form-control" value="" name="dfname">
-          </div>
-          <button type="submit" class="btn btn-success">ค้นหา</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <br>
-  <div class="row d-flex p-2">
-    <div class="col-md-3">
-      <h5 class="align-self-start">รายการวัสดุ
+      <h5 class="align-self-start">เปิดใบเบิกสินค้า
         <a href="/Useradding" class="btn btn-warning"><i class="bi bi-node-plus-fill"></i>&nbsp ADD</a>
       </h5>
     </div>
@@ -70,29 +37,21 @@
   <table class="table table-success table-striped">
     <thead class="table-success">
       <tr>
-        <th>ชื่อผู้ยืม</th>
-        <th>สถานะ</th>
-        <th>ประเภท</th>
+        <th>รหัสสินค้า</th>
+        <th>ชื่อสินค้า</th>
+        <th>ยี่ห้อ</th>
         <th>จำนวน</th>
-        <th>วันที่ยืม</th>
-        <th>สถานะ</th>
-        <!--
-        <th>แสดงรายละเอียด</th>-->
+        <th>last check</th>
       </tr>
     </thead>
     {% for row in user %}
     <tbody>
       <tr>
+        <td>{{datas[row].5}}</td>
         <td>{{datas[row].1}}</td>
         <td>{{datas[row].2}}</td>
         <td>{{datas[row].3}}</td>
         <td>{{datas[row].4}}</td>
-        <td>{{datas[row].6}}</td>
-        <td>{{datas[row].7}}</td>
-        <!--
-        <td>
-          <a href="/detail_product?no={{datas[row].0}}">รายละเอียด<i class="bi bi-folder2-open"></i></a>
-        </td>-->
       </tr>
     </tbody>
     {% endfor %}

@@ -12,7 +12,7 @@ Pageuse = Blueprint('Pageuse', __name__)
 @Pageuse.route("/userindex")
 def userindex():
     with db.cursor() as cur:
-        sql = "SELECT * FROM record ORDER BY re_date DESC "
+        sql = "SELECT * FROM products "
         try:
             cur.execute(sql)
             db.commit()
@@ -28,44 +28,6 @@ def userindex():
         pagination = Pagination(
             page=page, per_page=per_page, total=total, css_framework='bootstrap5')
     return render_template('user/index_user.html', datas=rows, page=page, per_page=per_page, Pagination=pagination, len=total, user=pagination_date)
-
-
-@Pageuse.route("/cresher", methods=["POST"])
-def cresher():
-    if request.method == "POST":
-        dstart = request.form['dstart']
-        endstart = request.form['endstart']
-        with db.cursor() as cur:
-            sql = "SELECT * FROM record WHERE re_date BETWEEN %s AND %s"
-            try:
-                cur.execute(sql, (dstart, endstart))
-                db.commit()
-            except:
-                return render_template('user/index_user.html', datas=('nodata'))
-            rows = cur.fetchall()
-            user = list(range(len(rows)))
-            pagination_user = user
-            pagination = Pagination(css_framework='bootstrap5')
-        return render_template('user/index_user.html', datas=rows, Pagination=pagination, user=pagination_user)
-
-
-@Pageuse.route("/cresher2", methods=["POST"])
-def cresher2():
-    if request.method == "POST":
-        dfname = request.form['dfname']
-        with db.cursor() as cur:
-            sql = "SELECT * FROM record WHERE User_name = %s"
-            try:
-                cur.execute(sql, (dfname))
-                db.commit()
-            except:
-                return render_template('user/index_user.html', datas=('nodata'))
-            rows = cur.fetchall()
-            user = list(range(len(rows)))
-            pagination_user = user
-            pagination = Pagination(css_framework='bootstrap5')
-        return render_template('user/index_user.html', datas=rows, Pagination=pagination, user=pagination_user)
-
 
 @Pageuse.route("/Useradding")
 def useradding():
@@ -98,14 +60,14 @@ def userAdd():
                 
 
                 rows = cur.fetchall()
-                sql5 = "UPDATE products SET Product_quantity = Product_quantity - %s WHERE Product_id = %s"
-                cur.execute(sql5,(re_unit, rows[0][1]))
+                sql5 = "UPDATE products SET Product_date = %s ,Product_quantity = Product_quantity - %s WHERE Product_id = %s"
+                cur.execute(sql5,(re_date,re_unit, rows[0][1]))
                 db.commit()
                 cur.execute(sql4,(runum,Product_type,re_date,re_unit,User_name))
                 db.commit()
                
                     
-                flash("ได้ทำการส่งเรื่องขอวัสดุแล้วกำลังส่งข้อมูล...กรุณารอสักครู่ครับ")
+                flash("ได้ทำการส่งเรื่องขอวัสดุเรียบร้อยแล้ว....กรุณามาติดต่อเพื่อรับของ")
             except:
                 return redirect(url_for('Pageuse.userindex', status="wait"))
 
