@@ -21,7 +21,7 @@
                 <th>หมวดหมู่</th>
                 <th>ยีห้อ</th>
                 <th>จำนวน</th>
-                <th>วันที่ซื้อ</th>
+                <th>ล่าสุด</th>
                 <th>ชื่อกำกับ</th>
                 <th>ชนิดวัสดุ</th>
                 <th></th>
@@ -95,7 +95,6 @@
                                         name="Product_type">
                                 </div>
 
-
                                 <div class="form-group">
                                     <label for="">หมวดหมู่</label>
                                     <select name="Product_category" class="form-select" value="{{row.2}}">
@@ -113,8 +112,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">จำนวน</label>
-                                    <input type="text" class="form-control" id="" value="{{row.4}}"
+                                    <input type="hidden" class="form-control" id="" value="{{row.4}}"
                                         name="Product_price">
                                 </div>
 

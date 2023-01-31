@@ -66,42 +66,22 @@ def cresheradmin2():
             pagination = Pagination(css_framework='bootstrap5')
         return render_template('admin/index.html', datas=rows, Pagination=pagination, user=pagination_user)
 
-
-@Document_products.route("/Admin_edit", methods=["POST"])
-def Admin_edit():
+@Document_products.route("/cresheradmin3", methods=["POST"])
+def cresheradmin3():
     if request.method == "POST":
-        No = request.form['re_no']
-        User_name = request.form['User_name']
-        re_pstatus = request.form['re_pstatus']
-        Product_type = request.form['Product_type']
-        re_unit = request.form['re_unit']
-        re_status = request.form['re_status']
-
+        dstart = request.form['dfname']
         with db.cursor() as cur:
-            sql = "UPDATE record SET User_name = %s, re_pstatus = %s ,Product_type = %s, Product_export = %s, re_date = CURRENT_TIME(), re_status = %s WHERE re_no = %s"
-            sql2 = "UPDATE record SET Product_export = Product_export - %s  WHERE re_no = %s;"
-            sql3 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
+            sql = "SELECT * FROM record WHERE re_status = %s"
             try:
-                cur.execute(sql, (No, User_name, re_pstatus,
-                            Product_type, re_unit, re_status))
+                cur.execute(sql, (dstart))
                 db.commit()
-                cur.execute(sql2, (re_unit, No))
-                db.commit()
-                cur.execute(sql3, (Product_type))
-                db.commit()
-
-                rows = cur.fetchall()
-                sql4 = "UPDATE products SET Product_quantity = Product_quantity + %s WHERE Product_id = %s"
-                cur.execute(sql4, (re_unit, rows[0][1]))
-                db.commit()
-
             except:
-                return redirect(url_for('Document_products.Admin_index'))
-
-            return redirect(url_for('Document_products.Admin_index'))
-
-    return redirect(url_for('Document_products.Admin_index'))
-
+                return render_template('admin/index.html', datas=('nodata'))
+            rows = cur.fetchall()
+            user = list(range(len(rows)))
+            pagination_user = user
+            pagination = Pagination(css_framework='bootstrap5')
+        return render_template('admin/index.html', datas=rows, Pagination=pagination, user=pagination_user)
 
 @Document_products.route("/Admin_del", methods=["POST"])
 def Admin_del():
@@ -124,7 +104,6 @@ def Admin_del():
 def adminadding():
     return render_template("admin/add.html")
 
-
 @Document_products.route("/adminadd", methods=["POST"])
 def adminadd():
     if request.method == "POST":
@@ -139,7 +118,7 @@ def adminadd():
             sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             sql2 = "UPDATE record SET Product_export = Product_export - %s  WHERE re_no = %s;"
             sql3 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
-            sql4 = "INSERT INTO borrow (borrow_no,Product_type,borrow_date,borrow_unit,User_name) VALUES (%s,%s,%s,%s,%s)"
+            sql4 = "INSERT INTO borrow (borrow_no,Product_type,borrow_date,borrow_unit,User_name,re_pstatus,borrow_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             try:
                 
                 cur.execute(sql,(runum, User_name, re_pstatus,Product_type, re_unit, re_date, re_status))
@@ -154,7 +133,7 @@ def adminadd():
                 sql5 = "UPDATE products SET Product_quantity = Product_quantity - %s WHERE Product_id = %s"
                 cur.execute(sql5,(re_unit, rows[0][1]))
                 db.commit()
-                cur.execute(sql4,(runum,Product_type,re_date,re_unit,User_name))
+                cur.execute(sql4,(runum,Product_type,re_date,re_unit,User_name,re_pstatus,re_status))
                 db.commit()
 
                 flash("ได้ทำการส่งเรื่องขอวัสดุแล้วกำลังส่งข้อมูล...กรุณารอสักครู่ครับ")
@@ -190,12 +169,9 @@ def PD_edit():
         Product_status = request.form['Product_status']
         Product_category = request.form['Product_category']
         with db.cursor() as cur:
-            sql = "UPDATE Products SET Product_type = %s, Product_manner = %s, Product_quantity = %s, type_id = %s WHERE Product_id = %s"
-            sql2 = "UPDATE products_type SET Product_type = %s, Product_category = %s, Product_status = %s WHERE type_id = %s"
+            sql = "UPDATE Products SET Product_type = %s, Product_manner = %s WHERE Product_id = %s"
             try:
-                cur.execute(sql, (re_pstatus, Product_type, re_unit, re_status, runum))
-                db.commit()
-                cur.execute(sql2, (re_status, re_pstatus, Product_status, Product_category))
+                cur.execute(sql, (re_pstatus, Product_type, re_status, runum))
                 db.commit()
             except:
                 return redirect(url_for('Document_products.pd'))
@@ -210,12 +186,9 @@ def PD_del():
     if request.method == "POST":
         No = request.form['Product_id']
         with db.cursor() as cur:
-            sql = "DELETE FROM products_type WHERE type_id = %s"
-            sql2 = "DELETE FROM Products WHERE Product_id = %s"
+            sql = "DELETE FROM Products WHERE Product_id = %s"
             try:
                 cur.execute(sql,(No))
-                db.commit()
-                cur.execute(sql2,(No))
                 db.commit()
             except:
                 return redirect(url_for('Document_products.pd'))
@@ -271,7 +244,6 @@ def menurigis():
         return render_template('admin/menu_pdregis.html', datas=rows)
 
 #menu broken products
-
 @Document_products.route("/menubroken")
 def menubroken():
     with db.cursor() as cur:
@@ -304,3 +276,56 @@ def Borrow():
         pagination = Pagination(
             page=page, per_page=per_page, total=total, css_framework='bootstrap5')
     return render_template('admin/menu_borrow.html', datas=rows, page=page, per_page=per_page, Pagination=pagination, len=total, user=pagination_date)
+
+@Document_products.route("/delborrow", methods = ["POST"])
+def delborrow():
+    if request.method == "POST":
+        No = request.form['DelID']
+        with db.cursor() as cur:
+            sql = "DELETE FROM borrow WHERE borrow_no = %s"
+            try:
+                cur.execute(sql,(No))
+                db.commit()
+            except:
+                return redirect(url_for('Document_products.Borrow'))
+
+            return redirect(url_for('Document_products.Borrow'))
+
+    return redirect(url_for('Document_products.Borrow'))
+
+@Document_products.route("/editborrow",methods = ["POST"])
+def editborrow():
+    if request.method == "POST":
+        no = request.form['Product_id']
+        pdtype = request.form['Product_type']
+        pddate = request.form['Product_date']
+        unit = request.form['Product_price']
+        fname = request.form['fname']
+        rest = request.form['re_pstatus']
+        typeborrow = request.form['typeborrow']
+        comment = request.form['comment']
+        with db.cursor() as cur:
+            sql = "UPDATE borrow SET borrow_unit = borrow_unit - %s  WHERE borrow_no = %s "
+            sql2 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
+            sql3 = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_import,re_date,re_status,comment) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+            try:
+                cur.execute(sql,(unit,no))
+                db.commit()
+                cur.execute(sql2,(pdtype))
+                db.commit()
+                
+                
+
+                rows = cur.fetchall()
+                sql5 = "UPDATE products SET Product_quantity = Product_quantity + %s WHERE Product_id = %s"
+                cur.execute(sql5,(unit ,rows[0][1]))
+                db.commit()
+                cur.execute(sql3,(no,fname,rest,pdtype,unit,pddate,typeborrow,comment))
+                db.commit()
+                
+            except:
+                return redirect(url_for('Document_products.Borrow'))
+
+            return redirect(url_for('Document_products.Borrow'))
+
+    return redirect(url_for('Document_products.Borrow'))

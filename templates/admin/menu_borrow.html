@@ -15,10 +15,12 @@
         <thead class="table-success">
             <tr>
                 <th>รายการที่</th>
-                <th>ชื่อสินค้า</th>
+                <th>รายการสินค้า</th>
                 <th>วันที่ทำการ</th>
                 <th>จำนวน</th>
-                <th>ชื่อกำกับ</th>
+                <th>ผู้ยืม</th>
+                <th>แผนก</th>
+                <th>สถานะ</th>
                 <th></th>
             </tr>
         </thead>
@@ -30,31 +32,33 @@
                 <td>{{datas[row].2}}</td>
                 <td>{{datas[row].3}}</td>
                 <td>{{datas[row].4}}</td>
+                <td>{{datas[row].5}}</td>
+                <td>{{datas[row].6}}</td>
                 <td>
                     <button type="button" class="btn btn-warning" title="Edit" data-toggle="tooltip"
-                        data-bs-toggle="modal" data-bs-target="#exampleModal{{row.0}}"><i
+                        data-bs-toggle="modal" data-bs-target="#exampleModal{{datas[row].0}}"><i
                             class="bi bi-folder2-open"></i></button>
                     &nbsp
                     <button type="button" class="btn btn-danger" title="Delete" data-toggle="tooltip"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop{{row.0}}"><i
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop{{datas[row].0}}"><i
                             class="bi bi-trash2-fill"></i></button>
                 </td>
             </tr>
             <!--Delect-->
-            <div class="modal fade" id="staticBackdrop{{row.0}}" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop{{datas[row].0}}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5 text-black" id="staticBackdropLabel">ยืนยันการลบ ?</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{{url_for('Document_products.PD_del')}}" method="POST">
+                        <form action="{{url_for('Document_products.delborrow')}}" method="POST">
 
                             <div class="modal-body text-black">
-                                <h3>ต้องการที่จะลบรายการ {{row.1}} หรือไม่!!!</h3>
+                                <h3>ต้องการที่จะลบรายการ {{datas[row].1}} หรือไม่!!!</h3>
                             </div>
-                            <input type="hidden" name="Product_id" value="{{row.0}}">
+                            <input type="hidden" name="DelID" value="{{datas[row].0}}">
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
@@ -66,7 +70,7 @@
             </div>
 
             <!--Update-->
-            <div class="modal fade" id="exampleModal{{row.0}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="exampleModal{{datas[row].0}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -75,58 +79,52 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-black">
-                            <form action="{{url_for('Document_products.PD_edit')}}" method="POST">
+                            <form action="{{url_for('Document_products.editborrow')}}" method="POST">
 
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control" id="" value="{{row.0}}" name="Product_id">
+                                    <input type="hidden" class="form-control" id="" value="{{datas[row].0}}"
+                                        name="Product_id">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">ชื่อวัสดุ</label>
-                                    <input type="text" class="form-control " id="" value="{{row.1}}"
+                                    <label for="">รายการสินค้า</label>
+                                    <input type="text" class="form-control " id="" value="{{datas[row].1}}"
                                         name="Product_type">
                                 </div>
 
-
                                 <div class="form-group">
-                                    <label for="">หมวดหมู่</label>
-                                    <select name="Product_category" class="form-select" value="{{row.2}}">
-                                        <option value="สำนักงาน">สำนักงาน</option>
-                                        <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
-                                        <option value="อื่น ๆ">อื่น ๆ</option>
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="">ยีห้อ</label>
-                                    <input type="text" class="form-control " id="" value="{{row.3}}"
-                                        name="Product_manner">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="">จำนวน</label>
-                                    <input type="text" class="form-control" id="" value="{{row.4}}"
-                                        name="Product_price">
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control " id="" value="{{row.5}}"
+                                    <label for="">เวลาที่คืน</label>
+                                    <input type="datetime-local" class="form-control " id="" value="{{datas[row].2}}"
                                         name="Product_date">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">ชื่อกำกับ</label>
-                                    <input type="text" class="form-control " id="" value="{{row.6}}" name="type_id">
+                                    <label for="">จำนวน</label>
+                                    <input type="text" class="form-control" id="" value="{{datas[row].3}}"
+                                        name="Product_price">
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="">ผู้ยืม</label>
+                                    <input type="text" class="form-control" id="" value="{{datas[row].4}}" name="fname">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">แผนก</label>
+                                    <input type="text" class="form-control" id="" value="{{datas[row].5}}" name="re_pstatus">
+                                </div>
 
                                 <div class="form-group">
                                     <label for="">ชนิดวัสดุ</label>
-                                    <select name="Product_status" class="form-select" value="{{row.7}}">
+                                    <select class="form-select" value="{{datas[row].6}}" name="typeborrow">
                                         <option value="คืน">คืน</option>
                                         <option value="รับเข้า">รับเข้า</option>
                                     </select>
+                                </div><br>
+
+                                <div>
+                                    <label for="">หมายเหตุ(เฉพาะคืนไม่หมด)</label><br>
+                                    <textarea name="comment" id="" cols="30" rows="5"></textarea>
                                 </div>
 
                                 <div class="modal-footer">
