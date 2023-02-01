@@ -25,8 +25,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
 </head>
 
-<body class="p-3 mb-2" style="background-color: #e3f2fd;">
-  <nav class="navbar navbar-expand-lg  navbar-primary fixed-top" style="background-color: #e3f2fd;">
+<body class="p-3 mb-2" style="background-color: #faf0e6;">
+  <nav class="navbar navbar-expand-lg navbar-primary fixed-top" style="background-color: #ffa31a;">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{url_for('Document_products.Admin_index')}}"><img src="../static/logo.png"
           alt="Bootstrap" width="150" height="120"></a>
@@ -34,27 +34,15 @@
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <ul class="nav nav-tabs">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="navbar-nav me-auto mb-lg-0">
-            <a class="nav-link" aria-current="page" href="{{url_for('Document_products.Borrow')}}">
-              <h5>รายการคำร้อง</h5>
-            </a>
-            <a class="nav-link" href="{{url_for('Document_products.adminadding')}}">
-              <h5>ใบเบิกสินค้า</h5>
-            </a>
-            <a class="nav-link" href="{{url_for('Document_products.pd')}}">
-              <h5>รายการสินค้า</h5>
-            </a>
-            <a class="nav-link" href="{{url_for('Document_products.menurigis')}}">
-              <h5>รายการทะเบียน</h5>
-            </a>
-            <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}">
-              <h5>ประวัติรายการวัสดุ</h5>
-            </a>
-          </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav me-auto mb-lg-0 nav-tabs">
+          <a class="nav-link" aria-current="page" href="{{url_for('Document_products.Borrow')}}"><h6>รายการคำร้อง</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.adminadding')}}"><h6>ใบเบิกสินค้า</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.pd')}}"><h6>รายการสินค้า</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.menurigis')}}"><h6>รายการทะเบียน</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}"><h6>ประวัติรายการวัสดุ</h6></a>
         </div>
-      </ul>
+      </div>
     </div>
   </nav>
   <main>
