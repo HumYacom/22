@@ -243,19 +243,6 @@ def menurigis():
         rows = cur.fetchall()
         return render_template('admin/menu_pdregis.html', datas=rows)
 
-#menu broken products
-@Document_products.route("/menubroken")
-def menubroken():
-    with db.cursor() as cur:
-        sql = "SELECT * FROM products_broken"
-        try:
-            cur.execute(sql)
-            db.commit()
-        except:
-            return render_template('admin/menu_pdbroken.html', datas=('nodata'))
-        rows = cur.fetchall()
-        return render_template('admin/menu_pdbroken.html', datas=rows)
-
 #Borrow
 @Document_products.route("/Borrow")
 def Borrow():
@@ -329,3 +316,11 @@ def editborrow():
             return redirect(url_for('Document_products.Borrow'))
 
     return redirect(url_for('Document_products.Borrow'))
+
+#Chart.js
+@Document_products.route("/chartjs")
+def chartjs():
+    
+    chart_data = [6,5]
+       
+    return render_template("admin/chart.html",chart_data=chart_data)

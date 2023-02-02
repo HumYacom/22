@@ -1,0 +1,40 @@
+{% extends "admin/layout_admin.html "%}
+
+{% block content %}
+<br><br><br><br><br><br><br>
+<h5 class="d-flex flex-row-reverse">Welcome By {{session['Name']}}</h5>
+<div class="d-flex flex-row-reverse">
+    <a href="/logout" class="btn btn-info">Logout</a>
+</div>
+<h4 class="d-flex justify-content-center">สถิติสินค้าทั้งหมด</h4><br>
+<div class="container col-md-3">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['ปากกา', 'คอม'],
+            datasets: [{
+                label: '# of Votes',
+                data: [{% for dt in chart_data %} 
+                {{ dt }}, 
+                {% endfor %}],
+        borderWidth: 1
+                }]
+            },
+        options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+        });
+</script>
+</form>
+
+{% endblock %}

@@ -23,6 +23,9 @@
     integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.min.js" integrity="sha512-qKyIokLnyh6oSnWsc5h21uwMAQtljqMZZT17CIMXuCQNIfFSFF4tJdMOaJHL9fQdJUANid6OB6DRR0zdHrbWAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 
 <body class="p-3 mb-2" style="background-color: #faf0e6;">
@@ -41,6 +44,7 @@
           <a class="nav-link" href="{{url_for('Document_products.pd')}}"><h6>รายการสินค้า</h6></a>
           <a class="nav-link" href="{{url_for('Document_products.menurigis')}}"><h6>รายการทะเบียน</h6></a>
           <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}"><h6>ประวัติรายการวัสดุ</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.chartjs')}}"><h6>สถิติ</h6></a>
         </div>
       </div>
     </div>
