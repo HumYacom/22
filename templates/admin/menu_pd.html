@@ -86,54 +86,44 @@
                             <form action="{{url_for('Document_products.PD_edit')}}" method="POST">
 
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control" id="" value="{{row.0}}" name="Product_id">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="">ชื่อวัสดุ</label>
-                                    <input type="text" class="form-control " id="" value="{{row.1}}"
-                                        name="Product_type">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="">หมวดหมู่</label>
-                                    <select name="Product_category" class="form-select" value="{{row.2}}">
-                                        <option value="สำนักงาน">สำนักงาน</option>
-                                        <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
-                                        <option value="อื่น ๆ">อื่น ๆ</option>
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="">ยีห้อ</label>
-                                    <input type="text" class="form-control " id="" value="{{row.3}}"
-                                        name="Product_manner">
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" id="" value="{{row.4}}"
-                                        name="Product_price">
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control " id="" value="{{row.5}}"
-                                        name="Product_date">
+                                    <input type="hidden" class="form-control" id="" value="{{row.0}}" name="no">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">ชื่อกำกับ</label>
-                                    <input type="text" class="form-control " id="" value="{{row.6}}" name="type_id">
+                                    <input type="text" class="form-control " id="" value=""
+                                        name="name_repd">
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="">ชื่อวัสดุ</label>
+                                    <input type="text" class="form-control " id="" name="Product_type" value="{{row.1}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">จำนวน</label>
+                                    <input type="text" class="form-control" id="" value="" name="quantity_repd">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">วันที่บันทึก</label>
+                                    <input type="datetime-local" class="form-control " id="" value=""
+                                        name="date_repd">
+                                </div>
 
                                 <div class="form-group">
                                     <label for="">ชนิดวัสดุ</label>
-                                    <select name="Product_status" class="form-select" value="{{row.7}}">
-                                        <option value="คงที่">คงที่</option>
-                                        <option value="สิ้นเปลือก">สิ้นเปลือก</option>
+                                    <select name="status_repd" class="form-select">
+                                        <option value="รับเข้า">รับเข้า</option>
                                     </select>
                                 </div>
+
+                                
+                                <div class="col-md-3">
+                                    <label for="">หมายเหตุ</label><br>
+                                    <textarea name="comment" id="" cols="30" rows="5">----</textarea>
+                                </div>
+                                  
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>

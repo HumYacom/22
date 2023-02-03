@@ -6,35 +6,82 @@
 <div class="d-flex flex-row-reverse">
     <a href="/logout" class="btn btn-info">Logout</a>
 </div>
-<h4 class="d-flex justify-content-center">สถิติสินค้าทั้งหมด</h4><br>
-<div class="container col-md-3">
-    <canvas id="myChart" width="400" height="400"></canvas>
+<h4 class="text-center">สถิติสินค้าทั้งหมด</h4><br>
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <canvas id="export_chart" width="200" height="200"></canvas>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <canvas id="import_chart" width="400" height="400"></canvas>
+        </div>
+    </div>
 </div>
 
+<!-- export -->
 <script>
-    const ctx = document.getElementById('myChart');
+    const ex_chart = document.getElementById('export_chart');
+    var chart_export = `{% for export in chart_export %}{{chart_export[export]}},{% endfor %}`;
+    const export_arr = chart_export.split(',');
 
-    new Chart(ctx, {
-        type: 'doughnut',
+    var chart_label_export = `{% for export in chart_export %}{{export}},{%endfor%}`;
+    const lable_export_arr = chart_label_export.split(',');
+    new Chart(ex_chart, {
+        type: 'pie',
         data: {
-            labels: ['ปากกา', 'คอม'],
+            labels: lable_export_arr,
             datasets: [{
-                label: '# of Votes',
-                data: [{% for dt in chart_data %} 
-                {{ dt }}, 
-                {% endfor %}],
-        borderWidth: 1
-                }]
-            },
+                label: 'สินค้ารายการออก',
+                data: export_arr,
+                borderWidth: 1
+            }]
+        },
         options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-        });
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text :'สินค้ารายการออก',font:{size:20}
+                },
+            },
+        },
+    });
+</script>
+
+<!-- import -->
+<script>
+    const im_chart = document.getElementById('import_chart');
+    var chart_import = `{% for import in chart_import %}{{chart_import[import]}},{% endfor %}`;
+    const import_arr = chart_import.split(',');
+
+    var chart_label_import = `{% for import in chart_import %}{{import}},{%endfor%}`;
+    const lable_import_arr = chart_label_import.split(',');
+    new Chart(im_chart, {
+        type: 'pie',
+        data: {
+            labels: lable_import_arr,
+            datasets: [{
+                label: 'สินค้ารายการเข้า',
+                data: import_arr,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'สินค้ารายการเข้า',font:{size:20}
+                },
+            },
+        },
+    });
 </script>
 </form>
-
 {% endblock %}

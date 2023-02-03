@@ -114,14 +114,15 @@ def adminadd():
         re_unit = request.form['re_unit']
         re_date = request.form['re_date']
         re_status = request.form['re_status']
+        comment = request.form['comment']
         with db.cursor() as cur:
-            sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status,comment) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
             sql2 = "UPDATE record SET Product_export = Product_export - %s  WHERE re_no = %s;"
             sql3 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
             sql4 = "INSERT INTO borrow (borrow_no,Product_type,borrow_date,borrow_unit,User_name,re_pstatus,borrow_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             try:
                 
-                cur.execute(sql,(runum, User_name, re_pstatus,Product_type, re_unit, re_date, re_status))
+                cur.execute(sql,(runum, User_name, re_pstatus,Product_type, re_unit, re_date, re_status,comment))
                 db.commit()
                 cur.execute(sql2,(re_unit, runum))
                 db.commit()
@@ -161,17 +162,20 @@ def pd():
 @Document_products.route("/PD_edit", methods=["POST"])
 def PD_edit():
     if request.method == "POST":
-        runum = request.form['Product_id']
-        re_pstatus = request.form['Product_type']
-        Product_type = request.form['Product_manner']
-        re_unit = request.form['Product_price']
-        re_status = request.form['type_id']
-        Product_status = request.form['Product_status']
-        Product_category = request.form['Product_category']
+        num = request.form['no']
+        name = request.form['name_repd']
+        Product = request.form['Product_type']
+        quantity = request.form['quantity_repd']
+        date = request.form['date_repd']
+        re_status = request.form['status_repd']
+        comment = request.form['comment']
         with db.cursor() as cur:
-            sql = "UPDATE Products SET Product_type = %s, Product_manner = %s WHERE Product_id = %s"
+            sql = "UPDATE products SET Product_quantity = Product_quantity + %s WHERE Product_id = %s"
+            sql2 = "INSERT INTO record (re_no,User_name,Product_type,Product_import,re_date,re_status,comment) VALUES (%s,%s,%s,%s,%s,%s,%s)"
             try:
-                cur.execute(sql, (re_pstatus, Product_type, re_status, runum))
+                cur.execute(sql,(quantity,num))
+                db.commit()
+                cur.execute(sql2,(num,name,Product,quantity,date,re_status,comment))
                 db.commit()
             except:
                 return redirect(url_for('Document_products.pd'))
@@ -320,7 +324,59 @@ def editborrow():
 #Chart.js
 @Document_products.route("/chartjs")
 def chartjs():
-    
-    chart_data = [6,5]
-       
-    return render_template("admin/chart.html",chart_data=chart_data)
+    try:
+        with db.cursor() as cur:
+
+            query_type = "select Product_type from record" # query product_type
+            cur.execute(query_type)
+            db.commit() # fetch up to date data
+
+            query_type_data = cur.fetchall()
+
+            # chart config
+            chart_export = {}
+            chart_import = {}
+
+            # extract
+            for type in query_type_data:
+                chart_export.update(
+                    {
+                        str(type[0]): 0
+                    }
+                )
+
+                chart_import.update(
+                    {
+                        str(type[0]): 0
+                    }
+                )
+
+
+            for type_query in chart_export:
+                query_export = "select SUM(Product_export) AS Sum\
+                    from record\
+                    where Product_type = %s"
+
+                cur.execute(query_export, type_query)
+                db.commit()
+
+                sumary_export = cur.fetchall()
+                chart_export[type_query] = int(sumary_export[0][0])
+
+            for type_query in chart_export:
+                query_import = "select SUM(Product_import) AS Sum\
+                    from record\
+                    where Product_type = %s"
+
+                cur.execute(query_import, type_query)
+                db.commit()
+
+                sumary_import = cur.fetchall()
+                chart_import[type_query] = int(sumary_import[0][0])
+
+        return render_template('admin/chart.html' ,chart_import = chart_import, chart_export=chart_export)
+        
+    except:
+
+        return render_template('admin/chart.html' ,chart_import = chart_import, chart_export=chart_export)
+

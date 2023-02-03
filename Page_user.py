@@ -44,14 +44,15 @@ def userAdd():
         re_unit = request.form['re_unit']
         re_date = request.form['re_date']
         re_status = request.form['re_status']
+        comment = request.form['comment']
         with db.cursor() as cur:
-            sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT INTO record (re_no,User_name,re_pstatus,Product_type,Product_export,re_date,re_status,comment) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
             sql2 = "UPDATE record SET Product_export = Product_export - %s  WHERE re_no = %s;"
             sql3 = "SELECT Product_quantity, Product_id FROM products WHERE Product_type = %s"
             sql4 = "INSERT INTO borrow (borrow_no,Product_type,borrow_date,borrow_unit,User_name) VALUES (%s,%s,%s,%s,%s)"
             try:
                 
-                cur.execute(sql,(runum, User_name, re_pstatus,Product_type, re_unit, re_date, re_status))
+                cur.execute(sql,(runum, User_name, re_pstatus,Product_type, re_unit, re_date, re_status,comment))
                 db.commit()
                 cur.execute(sql2,(re_unit, runum))
                 db.commit()
