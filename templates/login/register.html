@@ -1,10 +1,10 @@
 {% extends "login/layout.html"%}
 
 {% block content %}
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 <div class="d-flex justify-content-center">
-  <h1>Register user stock</h1>
-</div>
+  <h1>Register System</h1>
+</div><br>
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 {% for msg in messages %}
@@ -24,29 +24,29 @@
     </div>
 
     <div class="form-group">
-      <label for="">Name</label>
+      <label for="">ชื่อ</label>
       <input type="text" class="form-control" id="" name="Name" required>
-    </div>
+    </div><br>
 
     <div class="form-group">
-      <label for="">Username</label>
+      <label for="">ID or username</label>
       <input type="text" class="form-control" id="" name="Username" required>
-    </div>
+    </div><br>
 
     <div class="form-group">
-      <label for="">Password</label>
+      <label for="">password (รหัสผ่าน)</label>
       <input type="password" class="form-control" id="" name="Password" required>
-    </div>
+    </div><br>
 
     <div class="form-group">
-      <label for="">Re-password</label>
+      <label for="">Re-password (ยืนยันอีกครั้ง)</label>
       <input type="password" class="form-control" id="" name="Repassword" required>
     </div>
     <br>
 
     <div class="modal-footer">
-      <a href="{{url_for('User.loginpage')}}" class="btn btn-primary">Revers</a> &nbsp
-      <button type="submit" class="btn btn-success">Success</button>
+      <a href="{{url_for('User.loginpage')}}" class="btn btn-primary">กลับ</a> &nbsp
+      <button type="submit" class="btn btn-success">ตกลง</button>
     </div>
 
   </form>

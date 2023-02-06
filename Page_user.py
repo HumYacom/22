@@ -75,3 +75,28 @@ def userAdd():
             return redirect(url_for('Pageuse.userindex', status="wait"))
 
     return render_template("user/Add_user.html", status="wait")
+
+#contact admin
+@Pageuse.route("/contact")
+def contact():
+    return render_template("user/contact_admin.html")
+
+@Pageuse.route("/contactadmin", methods = ["POST"])
+def contactadmin():
+    if request.method == "POST":
+        no = request.form["TextID"]
+        fname = request.form["Name"]
+        idphone = request.form["phone"]
+        sos = request.form["sos"]
+        with db.cursor() as cur:
+            sql = "INSERT INTO sos (ID,fname,phone,notify) VALUES (%s,%s,%s,%s)"
+            try:
+                cur.execute(sql,(no,fname,idphone,sos))
+                db.commit()
+                flash("ได้ทำการส่งเรื่องเรียบร้อยแล้ว....กรุณารอการติดต่อกลับ")
+            except:
+                return redirect(url_for('Pageuse.userindex', status="wait"))
+
+            return redirect(url_for('Pageuse.userindex', status="wait"))
+
+    return render_template("user/contact_admin.html", status="wait")   

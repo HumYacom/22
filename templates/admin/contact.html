@@ -1,0 +1,59 @@
+{% extends "admin/layout_admin.html "%}
+
+{% block content %}
+<br><br><br><br><br><br><br>
+<div class="d-flex justify-content-center">
+    <h4>แจ้งเหตุ</h4>
+</div><br>
+<div class="container">
+    <br>
+    <table class="table table-warning table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ลำดับที่</th>
+                <th>ชื่อ</th>
+                <th>เบอร์ติดต่อ</th>
+                <th>ข้อมูลเหตุ</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for row in datas %}
+        <tbody>
+            <tr>
+                <td>{{row.0}}</td>
+                <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+                <td>{{row.3}}</td>
+                <td>
+                    <button type="button" class="btn btn-danger" title="Delete" data-toggle="tooltip" data-bs-toggle="modal" data-bs-target="#staticBackdrop{row.0}"><i class="bi bi-trash2-fill"></i></button>
+                </td>
+            </tr>
+            <!--Delect-->
+            <div class="modal fade" id="staticBackdrop{row.0}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-black" id="staticBackdropLabel">ยืนยันการลบ ?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{url_for('Document_products.delcontact')}}" method="POST">
+
+                            <div class="modal-body text-black">
+                                <h3>ต้องการที่จะลบรายการ {row.1} หรือไม่!!!</h3>
+                            </div>
+                            <input type="hidden" name="DelID" value="{row.0}">
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,30 +1,106 @@
 {% extends "login/layout.html"%}
 
 {% block content %}
-<br><br><br><br><br><br>
-<div class="d-flex justify-content-center">
-    <h1>Welcome to login stock</h1>
-</div>
+<br><br><br><br><br><br><br>
 <input type="hidden" name="" value="{{status}}">
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 {% for msg in messages %}
-    {% if status == "wait" %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{msg}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% else %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{msg}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endif %}
+{% if status == "wait" %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{msg}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% else %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{msg}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
 
 {% endfor %}
 {% endif %}
 {% endwith %}
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <style>
+        .gradient-custom-2 {
+            /* fallback for old browsers */
+            background: #fccb90;
 
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, #e0d6ff, #e3daff, #e6deff, #e9e2ff, #ece6ff);
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, #e0d6ff, #e3daff, #e6deff, #e9e2ff, #ece6ff);
+        }
+
+        @media (min-width: 768px) {
+            .gradient-form {
+                height: 100vh !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .gradient-custom-2 {
+                border-top-right-radius: .3rem;
+                border-bottom-right-radius: .3rem;
+            }
+        }
+    </style>
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="card-body p-md-5 mx-md-4">
+
+                                <div class="text-center">
+                                    <img src="../static/logo.png"
+                                        style="width: 185px;" alt="logo">
+                                </div><br>
+
+                                <form action="{{url_for('User.Checklog')}}" method="POST">
+                                    <p>Please login to your account</p>
+
+                                    <div class="form-floating mb-4">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Username or ID" name="Userid" required>
+                                        <label for="floatingInput">Username or ID</label>
+                                    </div>
+
+                                    <div class="form-floating mb-4">
+                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="Password" required>
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+
+                                    <div class="text-center pt-1 mb-5 pb-1">
+                                        <button class="btn btn-outline-success" type="submit">Login</button>
+                                    </div>
+
+                                    <div class="d-flex align-items-center justify-content-center pb-4">
+                                        <p class="mb-0 me-2">Do you want something help?</p>
+                                        <a href="{{url_for('Pageuse.contact')}}" class="btn btn-outline-danger">Contact Admin</a>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                            <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                <h4 class="mb-4 text-black">Specialty Innovation Co., Ltd.</h4>
+                                <p class="small mb-0 text-black">offers a one-stop service for Wellness & Beauty products creation including personal care, color cosmetics, cosmeceutical , food supplements ,and traditional medicine To fulfill our service portfolio, Specialty Innovation provides guidance in concept initiation, original product development & formulation, packaging and brand design, registration and paperwork, and manufacturing. We are absolute in terms of quality from material selection and throughout production process to reassure highest product quality to serve customer’s need.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--
+    #Old login system
 <div class="d-flex justify-content-center">
     <form action="{{url_for('User.Checklog')}}" method="POST">
         <div class="form-group">
@@ -45,5 +121,5 @@
         </div>
     </form>
 </div>
-
+-->
 {% endblock %}

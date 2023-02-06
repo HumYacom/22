@@ -380,3 +380,32 @@ def chartjs():
 
         return render_template('admin/chart.html' ,chart_import = chart_import, chart_export=chart_export)
 
+#contact admin
+@Document_products.route("/contactad")
+def contactad():
+    with db.cursor() as cur:
+        sql = "SELECT * FROM sos"
+        try:
+            cur.execute(sql)
+            db.commit()
+        except:
+            return render_template('admin/contact.html', datas=('nodata'))
+        rows = cur.fetchall()
+        
+    return render_template('admin/contact.html', datas=rows)
+
+@Document_products.route("/delcontact", methods = ["POST"])
+def delcontact():
+    if request.method == "POST":
+        No = request.form['DelID']
+        with db.cursor() as cur:
+            sql = "DELETE FROM sos WHERE ID = %s"
+            try:
+                cur.execute(sql,(No))
+                db.commit()
+            except:
+                return redirect(url_for('Document_products.contactad'))
+
+            return redirect(url_for('Document_products.contactad'))
+
+    return redirect(url_for('Document_products.contactad'))
