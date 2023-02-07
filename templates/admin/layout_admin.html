@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +43,15 @@
           <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}"><h6>ประวัติรายการวัสดุ</h6></a>
           <a class="nav-link" href="{{url_for('Document_products.chartjs')}}"><h6>สถิติ</h6></a>
           <a class="nav-link" href="{{url_for('Document_products.contactad')}}"><h6>แจ้งเหตุ</h6></a>
+        </div>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <img class="rounded-circle me-lg-2" src="../static/personal.png" alt="" style="width: 40px; height: 40px;">
+              <span class="d-none d-lg-inline-flex">{{session['Name']}}</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end border-0 rounded-0 rounded-bottom m-0">
+              <a href="/logout" class="dropdown-item">Log Out</a>
+          </div>
         </div>
       </div>
     </div>

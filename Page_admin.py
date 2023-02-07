@@ -156,8 +156,15 @@ def pd():
         except:
             return render_template('admin/menu_pd.html', datas=('nodata'))
         rows = cur.fetchall()
-
-        return render_template('admin/menu_pd.html', datas=rows)
+        user = list(range(len(rows)))
+        total = len(user)
+        page, per_page, offset = get_page_args(
+            page_parameter='page', per_page_parameter='per_page')
+        pagination_user = user[offset:offset+10]
+        pagination_date = pagination_user
+        pagination = Pagination(
+            page=page, per_page=per_page, total=total, css_framework='bootstrap5')
+        return render_template('admin/menu_pd.html', datas=rows, page=page, per_page=per_page, Pagination=pagination, len=total, user=pagination_date)
 
 @Document_products.route("/PD_edit", methods=["POST"])
 def PD_edit():
@@ -245,7 +252,15 @@ def menurigis():
         except:
             return render_template('admin/menu_pdregis.html', datas=('nodata'))
         rows = cur.fetchall()
-        return render_template('admin/menu_pdregis.html', datas=rows)
+        user = list(range(len(rows)))
+        total = len(user)
+        page, per_page, offset = get_page_args(
+            page_parameter='page', per_page_parameter='per_page')
+        pagination_user = user[offset:offset+10]
+        pagination_date = pagination_user
+        pagination = Pagination(
+            page=page, per_page=per_page, total=total, css_framework='bootstrap5')
+    return render_template('admin/menu_pdregis.html', datas=rows, page=page, per_page=per_page, Pagination=pagination, len=total, user=pagination_date)
 
 #Borrow
 @Document_products.route("/Borrow")
