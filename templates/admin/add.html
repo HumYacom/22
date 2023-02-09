@@ -40,9 +40,10 @@
       <div class="col-md-3">
         <label for="">ประเภทยืมวัสดุ</label>
         <select name="Product_type" required="required" class="form-select">
-          <option value="">--วัสดุที่ยืม--</option>
-          <option value="คอม">คอม</option>
-          <option value="ปากกา">ปากกา</option>
+          <option value="">---กรุณาเลือกวัสดุ---</option>
+          {% for row in datas %}
+          <option value="{{row.1}}">{{row.1}}</option>
+          {% endfor %}
         </select>
       </div>&nbsp
       <div class="col-md-3">

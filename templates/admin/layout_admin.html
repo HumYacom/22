@@ -31,16 +31,16 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav me-auto mb-lg-0 nav-tabs">
-          <a class="nav-link" aria-current="page" href="{{url_for('Document_products.Borrow')}}"><h6>รายการคำร้อง</h6></a>
-          <a class="nav-link" href="{{url_for('Document_products.adminadding')}}"><h6>ใบเบิกสินค้า</h6></a>
+          <a class="nav-link" aria-current="page" href="{{url_for('Document_products.Borrow')}}"><h6>รายการขอยืม</h6></a>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><h6>เช็คสินค้า</h6></a>
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><h6>เช็ครายการ</h6></a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url_for('Document_products.pd')}}"><h6>รายชื่อสินค้า</h6></a></li>
-                <li><a class="dropdown-item" href="{{url_for('Document_products.menurigis')}}"><h6>รายการทะเบียน</h6></a></li>
+                <li><a class="dropdown-item" href="{{url_for('Document_products.pd')}}"><h6>รายชื่อวัสดุ</h6></a></li>
+                <li><a class="dropdown-item" href="{{url_for('Document_products.menurigis')}}"><h6>รายชื่อทะเบียน</h6></a></li>
+                <li><a class="dropdown-item" href="{{url_for('Document_products.adminadding')}}"><h6>เบิกวัสดุ</h6></a></li>
               </ul>
           </li>
-          <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}"><h6>ประวัติรายการวัสดุ</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}"><h6>ประวัติรายการทั้งหมด</h6></a>
           <a class="nav-link" href="{{url_for('Document_products.chartjs')}}"><h6>สถิติ</h6></a>
           <a class="nav-link" href="{{url_for('Document_products.contactad')}}"><h6>แจ้งเหตุ</h6></a>
         </div>

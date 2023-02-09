@@ -6,27 +6,10 @@
   <h3>รายการสินค้า</h3>
 </div>
 <br>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for msg in messages %}
-{% if status == "wait" %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>{{msg}}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% else %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>{{msg}}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endif %}
-{% endfor %}
-{% endif %}
-{% endwith %}
 <div class="container">
   <div class="row d-flex p-2">
     <div class="col-md-3">
-      <h5 class="align-self-start">เปิดใบเบิกสินค้า
+      <h5 class="align-self-start">เบิกสินค้า
         <a href="/Useradding" class="btn btn-warning"><i class="bi bi-node-plus-fill"></i>&nbsp ADD</a>
       </h5>
     </div>

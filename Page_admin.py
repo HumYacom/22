@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect, session, flash
-import pymysql
+import pymysql, datetime
 from dbconnect import *
 from flask_paginate import Pagination, get_page_args
 
@@ -102,7 +102,16 @@ def Admin_del():
 
 @Document_products.route("/adminadding")
 def adminadding():
-    return render_template("admin/add.html")
+    with db.cursor() as cur:
+        sql = "SELECT * FROM products_type"
+        try:
+            cur.execute(sql)
+            db.commit
+        except:
+            return render_template("admin/add.html", datas=('nodata'))
+        rows = cur.fetchall()
+            
+    return render_template("admin/add.html", datas=rows)
 
 @Document_products.route("/adminadd", methods=["POST"])
 def adminadd():
@@ -129,6 +138,7 @@ def adminadd():
                 cur.execute(sql3,(Product_type))
                 db.commit()
                 
+                
 
                 rows = cur.fetchall()
                 sql5 = "UPDATE products SET Product_quantity = Product_quantity - %s WHERE Product_id = %s"
@@ -139,11 +149,9 @@ def adminadd():
 
                 flash("ได้ทำการส่งเรื่องขอวัสดุแล้วกำลังส่งข้อมูล...กรุณารอสักครู่ครับ")
             except:
-                return redirect(url_for('Document_products.Admin_index', status="wait"))
-
-            return redirect(url_for('Document_products.Admin_index', status="wait"))
-
-    return render_template("admin/add.html", status="wait")
+                return render_template("admin/add.html", datas=('nodata'))
+           
+    return render_template("admin/add.html", status="wait", datas=rows)
 
 #menu products
 @Document_products.route("/pd")

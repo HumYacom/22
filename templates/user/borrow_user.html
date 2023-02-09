@@ -1,0 +1,50 @@
+{% extends "user/layout_user.html "%}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="d-flex justify-content-center">
+    <h3>รายการขอยืม</h3>
+</div><br>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for msg in messages %}
+{% if status == "wait" %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{msg}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{msg}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="container">
+    {{Pagination.links}}
+    <table class="table table-warning table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ชื่อผู้ยืม</th>
+                <th>รายการสินค้า</th>
+                <th>วันที่ยืม</th>
+                <th>จำนวน</th>
+                <th>สถานะ</th>
+            </tr>
+        </thead>
+        {% for row in user %}
+        <tbody>
+            <tr>
+                <td>{{datas[row].4}}</td>
+                <td>{{datas[row].1}}</td>
+                <td>{{datas[row].2}}</td>
+                <td>{{datas[row].3}}</td>
+                <td>{{datas[row].6}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
