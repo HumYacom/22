@@ -1,0 +1,200 @@
+<nav class="navbar navbar-expand-sm navbar-light" id="neubar">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img src="/static_files/images/logos/logo_2.png" height="60" /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+   
+      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto ">
+          <li class="nav-item">
+            <a class="nav-link mx-2 active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="#">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="#">Pricing</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Company
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Blog</a></li>
+              <li><a class="dropdown-item" href="#">About Us</a></li>
+              <li><a class="dropdown-item" href="#">Contact us</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+-------------------------------------------
+<nav class="navbar navbar-expand-lg navbar-primary fixed-top" style="background-color: #ffa31a;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('Document_products.Admin_index')}}"><img src="../static/logo.png"
+          alt="Bootstrap" width="150" height="120"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav me-auto mb-lg-0 nav-tabs">
+          <a class="nav-link" aria-current="page" href="{{url_for('Document_products.Borrow')}}"><h6>รายการขอยืม</h6></a>
+          <li class="dropdown">
+            <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span>เช็ครายการ</span><i class="bi bi-chevron-down"></i></a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url_for('Document_products.pd')}}"><h6>รายชื่อวัสดุ</h6></a></li>
+                <li><a class="dropdown-item" href="{{url_for('Document_products.menurigis')}}"><h6>รายชื่อทะเบียน</h6></a></li>
+                <li><a class="dropdown-item" href="{{url_for('Document_products.adminadding')}}"><h6>เบิกวัสดุ</h6></a></li>
+              </ul>
+          </li>
+          <a class="nav-link" href="{{url_for('Document_products.Admin_index')}}"><h6>ประวัติรายการทั้งหมด</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.chartjs')}}"><h6>สถิติ</h6></a>
+          <a class="nav-link" href="{{url_for('Document_products.contactad')}}"><h6>แจ้งเหตุ</h6></a>
+        </div>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <img class="rounded-circle me-lg-2" src="../static/personal.png" alt="" style="width: 40px; height: 40px;">
+              <span class="d-none d-lg-inline-flex">{{session['Name']}}</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end border-0 rounded-0 rounded-bottom m-0">
+              <a href="/logout" class="dropdown-item">Log Out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+-----------------------------------------------------
+<section>
+    <style>
+      .nav-item {
+        font-size: 18px;
+        text-transform: uppercase;
+        height: 82px;
+        line-height: 64px;
+      }
+
+      .flare {
+        background: #ef662b;
+      }
+
+      .flare a.nav-link {
+        color: #fff !important
+      }
+
+      .topbarElements>div:nth-of-type(1) {
+        font-size: 48px;
+        margin: 12px 32px;
+        color: #ef662b
+      }
+
+      @media screen and (min-width:1040px) {
+        .flare {
+          margin-right: -15px;
+        }
+      }
+
+      @media screen and (max-width:1029px) {
+        .navbar-nav {
+          margin-bottom: 15px;
+          text-align: center
+        }
+
+        .nav-item {
+          background: rgba(255, 255, 255, 0.1);
+          margin: 2px;
+        }
+      }
+    </style>
+    <div class="row align-items-center text-center">
+      <div class="col">
+        <div class="topbarElements d-inline-flex align-items-center">
+          <div>&#x27A4;</div>
+          <div class="text-start d-md-block d-none">
+            <h5 class="p-0 m-0 text-uppercase">Office</h5>
+            <p class="p-0 m-0 text-secondary">Haroooooooo</p>
+          </div>
+        </div>
+      </div>
+      <div class="col border-start border-end">
+        <div class="topbarElements d-inline-flex align-items-center">
+          <div>&#x270E;</div>
+          <div class="text-start d-md-block d-none">
+            <h5 class="p-0 m-0 text-uppercase">Email</h5>
+            <p class="p-0 m-0 text-secondary">adminspg@email.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="topbarElements d-inline-flex align-items-center">
+          <div>
+            &#x260F;
+          </div>
+          <div class="text-start d-md-block d-none">
+            <h5 class="p-0 m-0 text-uppercase">Phone connect IT</h5>
+            <p class="p-0 m-0 text-secondary">123</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-warning bg-warning p-0 m-0">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../static/logo.png" alt="SP Logo" height="72"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+            <li class="nav-item"><a class="nav-link mx-2" aria-current="page" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link mx-2" href="#">Products</a></li>
+            <li class="nav-item"><a class="nav-link mx-2" href="#">Pricing</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Company</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Blog</a></li>
+                <li><a class="dropdown-item" href="#">About Us</a></li>
+                <li><a class="dropdown-item" href="#">Contact us</a></li>
+              </ul>
+            </li>
+            <div class="nav-item dropdown nav-item flare">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img class="rounded-circle me-lg-2" src="../static/personal.png" alt=""
+                  style="width: 40px; height: 40px;">
+                <span class="d-none d-lg-inline-flex">{{session['Name']}}</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a href="/logout" class="dropdown-item">Log Out</a>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+-----------------------------------------------------
+<nav class="navbar navbar-expand-lg  navbar-primary fixed-top" style="background-color: #ffa31a;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('Pageuse.userindex')}}"><img src="../static/logo.png" alt="Bootstrap" width="150" height="120"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+        <div class="navbar-nav me-auto mb-lg-0 nav-tabs">
+          <a class="nav-link rounded" aria-current="page" href="{{url_for('Pageuse.userindex')}}"><h6>รายการสินค้า</h6></a>
+          <a class="nav-link" href="{{url_for('Pageuse.useradding')}}"><h6>เบิกสินค้า</h6></a>
+          <a class="nav-link" href="{{url_for('Pageuse.Borrowuser')}}"><h6>รายการขอยืม</h6></a>
+          <a class="nav-link" href="{{url_for('User.loginpage')}}"><h6>เข้าสู่ระบบ</h6></a>
+        </div>
+      </div>
+    </div>
+  </nav>

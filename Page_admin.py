@@ -103,7 +103,7 @@ def Admin_del():
 @Document_products.route("/adminadding")
 def adminadding():
     with db.cursor() as cur:
-        sql = "SELECT * FROM products_type"
+        sql = "SELECT * FROM products"
         try:
             cur.execute(sql)
             db.commit
@@ -149,7 +149,9 @@ def adminadd():
 
                 flash("ได้ทำการส่งเรื่องขอวัสดุแล้วกำลังส่งข้อมูล...กรุณารอสักครู่ครับ")
             except:
-                return render_template("admin/add.html", datas=('nodata'))
+                return redirect(url_for('Document_products.Admin_index', datas=('nodata')))
+
+            return redirect(url_for('Document_products.Admin_index', status="wait"))
            
     return render_template("admin/add.html", status="wait", datas=rows)
 

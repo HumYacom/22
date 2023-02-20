@@ -26,24 +26,99 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
 </head>
 
-<body class="p-3 mb-2" style="background-color: #faf0e6;">
-  <nav class="navbar navbar-expand-lg  navbar-primary fixed-top" style="background-color: #ffa31a;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{{url_for('Pageuse.userindex')}}"><img src="../static/logo.png" alt="Bootstrap" width="150" height="120"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="navbar-nav me-auto mb-lg-0 nav-tabs">
-          <a class="nav-link" aria-current="page" href="{{url_for('Pageuse.userindex')}}"><h6>รายการสินค้า</h6></a>&nbsp
-          <a class="nav-link" href="{{url_for('Pageuse.useradding')}}"><h6>ใบเบิกสินค้า</h6></a>
-          <a class="nav-link" href="{{url_for('Pageuse.Borrowuser')}}"><h6>รายการยืม</h6></a>
-          <a class="nav-link" href="{{url_for('User.loginpage')}}"><h6>เข้าสู่ระบบ</h6></a>
+<body>
+  <section>
+    <style>
+      .nav-item {
+        font-size: 18px;
+        text-transform: uppercase;
+        height: 82px;
+        line-height: 64px;
+      }
+
+      .flare {
+        background: #ef662b;
+      }
+
+      .flare a.nav-link {
+        color: #fff !important
+      }
+
+      .topbarElements>div:nth-of-type(1) {
+        font-size: 48px;
+        margin: 12px 32px;
+        color: #ef662b
+      }
+
+      @media screen and (min-width:1040px) {
+        .flare {
+          margin-right: -15px;
+        }
+      }
+
+      @media screen and (max-width:1029px) {
+        .navbar-nav {
+          margin-bottom: 15px;
+          text-align: center
+        }
+
+        .nav-item {
+          background: rgba(255, 255, 255, 0.1);
+          margin: 2px;
+        }
+      }
+    </style>
+    <div class="row align-items-center text-center">
+      <div class="col">
+        <div class="topbarElements d-inline-flex align-items-center">
+          <div>&#x27A4;</div>
+          <div class="text-start d-md-block d-none">
+            <h5 class="p-0 m-0 text-uppercase">Office</h5>
+            <p class="p-0 m-0 text-secondary">อยู่ไหนก็ได้โตแล้ว</p>
+          </div>
+        </div>
+      </div>
+      <div class="col border-start border-end">
+        <div class="topbarElements d-inline-flex align-items-center">
+          <div>&#x270E;</div>
+          <div class="text-start d-md-block d-none">
+            <h5 class="p-0 m-0 text-uppercase">Email</h5>
+            <p class="p-0 m-0 text-secondary">adminspg@email.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="topbarElements d-inline-flex align-items-center">
+          <div>
+            &#x260F;
+          </div>
+          <div class="text-start d-md-block d-none">
+            <h5 class="p-0 m-0 text-uppercase">Phone connect IT</h5>
+            <p class="p-0 m-0 text-secondary">123</p>
+          </div>
         </div>
       </div>
     </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-warning bg-warning p-0 m-0">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{url_for('Pageuse.userindex')}}"><img src="../static/logo.png" alt="SP Logo"
+            height="72"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+            <li class="nav-item"><a class="nav-link mx-2" aria-current="page" href="{{url_for('Pageuse.Borrowuser')}}">รายการผู้ขอใช้</a></li>
+            <li class="nav-item"><a class="nav-link mx-2" href="{{url_for('Pageuse.userindex')}}">รายการสินค้า</a></li>
+            <li class="nav-item"><a class="nav-link mx-2" href="{{url_for('Pageuse.useradding')}}">เบิกสินค้า</a></li>
+            <li class="nav-item flare"><a class="nav-link mx-2" href="{{url_for('User.loginpage')}}">เข้าสู่ระบบ <span class="ms-2">&#x2192;</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </section>
   <main>
     {% block content %}
     {% endblock %}

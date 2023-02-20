@@ -1,7 +1,7 @@
 {% extends "admin/layout_admin.html "%}
 
 {% block content %}
-<br><br><br><br><br><br>
+<br><br>
 <div class="d-flex justify-content-center">
     <h3>รายชื่อวัสดุ</h3>
 </div>
@@ -92,8 +92,7 @@
 
                                 <div class="form-group">
                                     <label for="">Record by</label>
-                                    <input type="text" class="form-control " id="" value=""
-                                        name="name_repd">
+                                    <input type="text" class="form-control " id="" value="{{session['Name']}}" name="name_repd">
                                 </div>
 
                                 <div class="form-group">
